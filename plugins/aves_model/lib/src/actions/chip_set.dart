@@ -13,6 +13,7 @@ enum ChipSetAction {
   map,
   slideshow,
   stats,
+  donate,
   // selecting (single/multiple filters)
   delete,
   hide,
@@ -43,6 +44,7 @@ class ChipSetActions {
     ChipSetAction.map,
     ChipSetAction.slideshow,
     ChipSetAction.stats,
+    ChipSetAction.donate,
     null,
     ChipSetAction.createAlbum,
     ChipSetAction.createVault,
@@ -62,6 +64,7 @@ class ChipSetActions {
     ChipSetAction.map,
     ChipSetAction.slideshow,
     ChipSetAction.stats,
+    ChipSetAction.donate,
     null,
     ChipSetAction.configureVault,
     ChipSetAction.lockVault,

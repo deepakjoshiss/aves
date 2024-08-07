@@ -23,6 +23,7 @@ extension ExtraChipSetActionView on ChipSetAction {
       ChipSetAction.map => l10n.menuActionMap,
       ChipSetAction.slideshow => l10n.menuActionSlideshow,
       ChipSetAction.stats => l10n.menuActionStats,
+      ChipSetAction.donate => 'Donate',
       // selecting (single/multiple filters)
       ChipSetAction.delete => l10n.chipActionDelete,
       ChipSetAction.hide => l10n.chipActionHide,
@@ -58,6 +59,7 @@ extension ExtraChipSetActionView on ChipSetAction {
       ChipSetAction.map => AIcons.map,
       ChipSetAction.slideshow => AIcons.slideshow,
       ChipSetAction.stats => AIcons.stats,
+      ChipSetAction.donate => AIcons.favourite,
       // selecting (single/multiple filters)
       ChipSetAction.delete => AIcons.delete,
       ChipSetAction.hide => AIcons.hide,

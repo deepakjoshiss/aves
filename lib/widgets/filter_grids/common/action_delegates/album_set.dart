@@ -149,17 +149,7 @@ class AlbumChipSetActionDelegate extends ChipSetActionDelegate<AlbumFilter> with
       case ChipSetAction.createAlbum:
         _createAlbum(context, locked: false);
       case ChipSetAction.createVault:
-        //_createAlbum(context, locked: true);
-        if (Platform.isAndroid) {
-
-          const intent = AndroidIntent(
-            action: 'action_view',
-            package: 'org.fossify.gallery.debug',
-            componentName: 'org.fossify.gallery.aes.AESActivity',
-            arguments: {'POS_EMULATOR_EXTRA': 'extras'},
-          );
-           intent.launch();
-        }
+        _createAlbum(context, locked: true);
       // single/multiple filters
       case ChipSetAction.delete:
         _delete(context);

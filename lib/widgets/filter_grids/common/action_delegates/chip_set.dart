@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:aves/app_mode.dart';
 import 'package:aves/model/covers.dart';
 import 'package:aves/model/entry/entry.dart';
@@ -96,6 +99,7 @@ abstract class ChipSetActionDelegate<T extends CollectionFilter> with FeedbackMi
       case ChipSetAction.map:
       case ChipSetAction.slideshow:
       case ChipSetAction.stats:
+      case ChipSetAction.donate:
         return isMain;
       // selecting (single/multiple filters)
       case ChipSetAction.hide:
@@ -145,6 +149,7 @@ abstract class ChipSetActionDelegate<T extends CollectionFilter> with FeedbackMi
       case ChipSetAction.map:
       case ChipSetAction.slideshow:
       case ChipSetAction.stats:
+      case ChipSetAction.donate:
         return (!isSelecting && hasItems) || (isSelecting && hasSelection);
       // selecting (single/multiple filters)
       case ChipSetAction.delete:
@@ -190,6 +195,16 @@ abstract class ChipSetActionDelegate<T extends CollectionFilter> with FeedbackMi
         _goToSlideshow(context);
       case ChipSetAction.stats:
         _goToStats(context);
+      case ChipSetAction.donate:
+        if (Platform.isAndroid) {
+          const intent = AndroidIntent(
+            action: 'action_view',
+            package: 'org.fossify.gallery.debug',
+            componentName: 'org.fossify.gallery.aes.AESActivity',
+            arguments: {'POS_EMULATOR_EXTRA': 'extras'},
+          );
+          intent.launch();
+        }
       // selecting (single/multiple filters)
       case ChipSetAction.hide:
         _hide(context);
