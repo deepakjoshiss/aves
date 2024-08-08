@@ -135,6 +135,20 @@ flutter:
     - assets/
   generate: true
   uses-material-design: true
+  fonts:
+    - family: sfpro
+      fonts:
+        - asset: fonts/sfpro_display_regular.ttf
+        - asset: fonts/sfpro_display_thin.ttf
+          weight: 100
+        - asset: fonts/sfpro_display_light.ttf
+          weight: 300
+        - asset: fonts/sfpro_display_medium.ttf
+          weight: 500
+        - asset: fonts/sfpro_display_semibold.ttf
+          weight: 600
+        - asset: fonts/sfpro_display_bold.ttf
+          weight: 700
 
 ################################################################################
 # Localization

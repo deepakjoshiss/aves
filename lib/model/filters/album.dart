@@ -85,8 +85,10 @@ class AlbumFilter extends CoveredCollectionFilter {
       case AlbumType.screenRecordings:
         return SynchronousFuture(colors.albumScreenRecordings);
       case AlbumType.screenshots:
+      case AlbumType.documents:
         return SynchronousFuture(colors.albumScreenshots);
       case AlbumType.videoCaptures:
+      case AlbumType.movies:
         return SynchronousFuture(colors.albumVideoCaptures);
     }
     return super.color(context);

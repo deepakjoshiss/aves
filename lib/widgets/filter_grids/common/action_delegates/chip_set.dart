@@ -16,6 +16,7 @@ import 'package:aves/services/common/services.dart';
 import 'package:aves/theme/colors.dart';
 import 'package:aves/theme/durations.dart';
 import 'package:aves/theme/themes.dart';
+import 'package:aves/utils/android_file_utils.dart';
 import 'package:aves/view/view.dart';
 import 'package:aves/widgets/collection/collection_page.dart';
 import 'package:aves/widgets/common/action_mixins/feedback.dart';
@@ -196,15 +197,7 @@ abstract class ChipSetActionDelegate<T extends CollectionFilter> with FeedbackMi
       case ChipSetAction.stats:
         _goToStats(context);
       case ChipSetAction.donate:
-        if (Platform.isAndroid) {
-          const intent = AndroidIntent(
-            action: 'action_view',
-            package: 'org.fossify.gallery.debug',
-            componentName: 'org.fossify.gallery.aes.AESActivity',
-            arguments: {'POS_EMULATOR_EXTRA': 'extras'},
-          );
-          intent.launch();
-        }
+        androidFileUtils.goToDonate([]);
       // selecting (single/multiple filters)
       case ChipSetAction.hide:
         _hide(context);

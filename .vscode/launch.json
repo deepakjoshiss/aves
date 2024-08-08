@@ -12,16 +12,11 @@
       "program": "lib/main_play.dart"
     },
     {
-      "name": "aves",
-      "request": "launch",
-      "type": "dart"
-    },
-    {
       "name": "aves-play-attach",
       "request": "attach", // Attach instead of launching
       "type": "dart",
-      "program": "lib/main_play.dart",
       "packages": ".dart_tool/package_config.json",
+      "program": "lib/main_play.dart",
     },
     {
       "name": "aves (profile mode)",
@@ -30,10 +25,12 @@
       "flutterMode": "profile"
     },
     {
-      "name": "aves (release mode)",
+      "name": "release-aves",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "release"
+      "args": ["--flavor", "play"],
+      "flutterMode": "release",
+      "program": "lib/main_play.dart"
     }
   ]
 }

@@ -170,7 +170,7 @@ class Themes {
       onSecondary: onAccent,
       onSurface: _lightOnSurface,
     );
-    final textTheme = _lightThemeTypo;
+    final textTheme = _lightThemeTypo.apply(fontFamily: 'sfpro');
     return _baseTheme(colors, deviceInitialized).copyWith(
       // TYPOGRAPHY & ICONOGRAPHY
       textTheme: textTheme,
@@ -223,7 +223,7 @@ class Themes {
   }
 
   static ThemeData _baseDarkTheme(ColorScheme colors, bool deviceInitialized) {
-    final textTheme = _darkThemeTypo;
+    final textTheme = _darkThemeTypo.apply(fontFamily: 'sfpro');
     return _baseTheme(colors, deviceInitialized).copyWith(
       // TYPOGRAPHY & ICONOGRAPHY
       textTheme: textTheme,

@@ -26,6 +26,7 @@ import 'package:aves/services/common/services.dart';
 import 'package:aves/services/media/media_edit_service.dart';
 import 'package:aves/theme/durations.dart';
 import 'package:aves/theme/themes.dart';
+import 'package:aves/utils/android_file_utils.dart';
 import 'package:aves/utils/collection_utils.dart';
 import 'package:aves/utils/mime_utils.dart';
 import 'package:aves/widgets/common/action_mixins/entry_editor.dart';
@@ -716,16 +717,7 @@ class EntrySetActionDelegate with FeedbackMixin, PermissionAwareMixin, SizeAware
   void _goToDonate(BuildContext context) {
     final selection = context.read<Selection<AvesEntry>>();
     final groupedEntries = selection.isSelecting ? selection.selectedItems.map((entry) => entry.path).toList() : <String>[];
-
-    if (Platform.isAndroid) {
-      final intent = AndroidIntent(
-        action: 'action_view',
-        package: 'org.fossify.gallery.debug',
-        componentName: 'org.fossify.gallery.aes.AESActivity',
-        arguments: {'paths': groupedEntries},
-      );
-      intent.launch();
-    }
+    androidFileUtils.goToDonate(groupedEntries);
   }
 
   void _goToSearch(BuildContext context) {

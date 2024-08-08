@@ -330,18 +330,27 @@ class IconUtils {
     double? size,
   }) {
     size ??= IconTheme.of(context).size;
+    Widget? buildCircleIcon(IconData icon) => null;
+    // Widget buildCircleIcon(IconData icon) => Container(
+    //       padding: const EdgeInsets.all(2),
+    //       decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: Colors.white)),
+    //       child: Icon(icon, size: size != null ? size - 4.0 : size),
+    //     );
     Widget buildIcon(IconData icon) => Icon(icon, size: size);
 
     switch (covers.effectiveAlbumType(albumPath)) {
       case AlbumType.camera:
-        return buildIcon(AIcons.cameraAlbum);
+        return buildCircleIcon(AIcons.cameraAlbum);
       case AlbumType.screenshots:
       case AlbumType.videoCaptures:
-        return buildIcon(AIcons.screenshotAlbum);
+        return buildCircleIcon(AIcons.screenshotAlbum);
+      case AlbumType.movies:
+      case AlbumType.documents:
+        return buildCircleIcon(AIcons.home);
       case AlbumType.screenRecordings:
-        return buildIcon(AIcons.recordingAlbum);
+        return buildCircleIcon(AIcons.recordingAlbum);
       case AlbumType.download:
-        return buildIcon(AIcons.downloadAlbum);
+        return buildCircleIcon(AIcons.downloadAlbum);
       case AlbumType.app:
         final package = covers.effectiveAlbumPackage(albumPath);
         return package != null

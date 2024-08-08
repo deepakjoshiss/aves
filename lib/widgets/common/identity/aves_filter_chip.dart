@@ -48,6 +48,8 @@ class AvesFilterDecoration {
 
 class AvesFilterChip extends StatefulWidget {
   final CollectionFilter filter;
+  final BoxBorder? border;
+  final TextStyle? titleStyle;
   final bool showLeading, showText, allowGenericIcon, useFilterColor;
   final AvesFilterDecoration? decoration;
   final Color? background;
@@ -71,6 +73,8 @@ class AvesFilterChip extends StatefulWidget {
   const AvesFilterChip({
     super.key,
     required this.filter,
+    this.border,
+    this.titleStyle,
     this.showLeading = true,
     this.showText = true,
     this.allowGenericIcon = true,
@@ -285,7 +289,7 @@ class _AvesFilterChipState extends State<AvesFilterChip> {
 
       content = Row(
         mainAxisSize: decoration != null ? MainAxisSize.max : MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           if (leading != null) leading,
           if (leading != null && showText) SizedBox(width: padding),
@@ -293,11 +297,12 @@ class _AvesFilterChipState extends State<AvesFilterChip> {
             Flexible(
               child: Text(
                 filter.getLabel(context),
-                style: TextStyle(
-                  fontSize: AvesFilterChip.fontSize,
-                  decoration: filter.reversed ? TextDecoration.lineThrough : null,
-                  //decorationThickness: 2,
-                ),
+                style: widget.titleStyle ??
+                    TextStyle(
+                      fontSize: AvesFilterChip.fontSize,
+                      decoration: filter.reversed ? TextDecoration.lineThrough : null,
+                      //decorationThickness: 2,
+                    ),
                 softWrap: false,
                 overflow: TextOverflow.fade,
               ),
@@ -313,9 +318,12 @@ class _AvesFilterChipState extends State<AvesFilterChip> {
       if (details != null) {
         content = Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             content,
-            Flexible(child: details),
+            Flexible(
+              child: details,
+            )
           ],
         );
       }
@@ -326,8 +334,12 @@ class _AvesFilterChipState extends State<AvesFilterChip> {
           child: ClipRRect(
             borderRadius: decoration.textBorderRadius,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: padding * 2, vertical: AvesFilterChip.decoratedContentVerticalPadding),
-              color: chipBackground,
+              padding: EdgeInsets.only(
+                  left: padding * 2,
+                  right: padding * 2,
+                  bottom: AvesFilterChip.decoratedContentVerticalPadding,
+                  top: AvesFilterChip.decoratedContentVerticalPadding / 2),
+              color: chipBackground.withAlpha(200),
               child: content,
             ),
           ),
@@ -384,10 +396,11 @@ class _AvesFilterChipState extends State<AvesFilterChip> {
                   }
                   return DecoratedBox(
                     decoration: BoxDecoration(
-                      border: Border.fromBorderSide(BorderSide(
-                        color: widget.useFilterColor ? _outlineColor : context.select<AvesColorsData, Color>((v) => v.neutral),
-                        width: AvesFilterChip.outlineWidth,
-                      )),
+                      border: widget.border ??
+                          Border.fromBorderSide(BorderSide(
+                            color: widget.useFilterColor ? _outlineColor : context.select<AvesColorsData, Color>((v) => v.neutral),
+                            width: AvesFilterChip.outlineWidth,
+                          )),
                       borderRadius: borderRadius,
                     ),
                     position: DecorationPosition.foreground,

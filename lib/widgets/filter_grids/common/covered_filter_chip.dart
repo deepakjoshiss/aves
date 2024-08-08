@@ -22,6 +22,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import 'package:aves/theme/colors.dart';
+
 class CoveredFilterChip<T extends CollectionFilter> extends StatelessWidget {
   final T filter;
   final double extent, thumbnailExtent;
@@ -53,14 +55,14 @@ class CoveredFilterChip<T extends CollectionFilter> extends StatelessWidget {
 
     // height can actually be a little larger or smaller, when info includes icons or non-latin scripts
     // but it's not worth measuring text metrics, as the widget is flexible enough to absorb the difference
-    return textScaler.scale(AvesFilterChip.fontSize + detailFontSize(extent) + 4) + AvesFilterChip.decoratedContentVerticalPadding * 2;
+    return textScaler.scale(16) + AvesFilterChip.decoratedContentVerticalPadding;
   }
 
-  static Radius radius(double extent) => Radius.circular(min<double>(AvesFilterChip.defaultRadius, extent / 8));
+  static Radius radius(double extent) => Radius.circular(min<double>(AvesFilterChip.defaultRadius, extent / 10));
 
-  static double detailIconSize(double extent) => min<double>(AvesFilterChip.fontSize, extent / 8);
+  static double detailIconSize(double extent) => 16;
 
-  static double detailFontSize(double extent) => min<double>(AvesFilterChip.fontSize, extent / 6);
+  static double detailFontSize(double extent) => 10;
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +83,9 @@ class CoveredFilterChip<T extends CollectionFilter> extends StatelessWidget {
               {
                 final countryCode = filter.code;
                 return StreamBuilder<CountrySummaryInvalidatedEvent>(
-                  stream: source.eventBus.on<CountrySummaryInvalidatedEvent>().where((event) => event.countryCodes == null || event.countryCodes!.contains(countryCode)),
+                  stream: source.eventBus
+                      .on<CountrySummaryInvalidatedEvent>()
+                      .where((event) => event.countryCodes == null || event.countryCodes!.contains(countryCode)),
                   builder: (context, snapshot) => _buildChip(context, source),
                 );
               }
@@ -115,7 +119,7 @@ class CoveredFilterChip<T extends CollectionFilter> extends StatelessWidget {
     return AvesFilterChip(
       key: chipKey,
       filter: _filter,
-      showLeading: showText,
+      showLeading: false,
       showText: showText,
       allowGenericIcon: false,
       decoration: AvesFilterDecoration(
@@ -161,6 +165,8 @@ class CoveredFilterChip<T extends CollectionFilter> extends StatelessWidget {
         ),
       ),
       banner: banner,
+      border: Border.fromBorderSide(BorderSide(color: context.select<AvesColorsData, Color>((v) => v.neutral).withAlpha(60))),
+      titleStyle: const TextStyle(fontSize: 16, fontFamily: 'sfpro', fontWeight: FontWeight.w500),
       details: showText ? _buildDetails(context, source, _filter) : null,
       padding: titlePadding,
       heroType: heroType,
@@ -174,15 +180,23 @@ class CoveredFilterChip<T extends CollectionFilter> extends StatelessWidget {
   Widget _buildDetails(BuildContext context, CollectionSource source, T filter) {
     final countFormatter = NumberFormat.decimalPattern(context.locale);
 
-    final padding = min<double>(8.0, extent / 16);
+    const padding = 4.0;
     final iconSize = detailIconSize(extent);
     final fontSize = detailFontSize(extent);
+    final leading = filter.iconBuilder(context, iconSize, allowGenericIcon: false);
     return Row(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        if (leading != null)
+          AnimatedPadding(
+            padding: const EdgeInsetsDirectional.only(end: padding),
+            duration: ADurations.chipDecorationAnimation,
+            child: leading,
+          ),
         if (pinned)
           AnimatedPadding(
-            padding: EdgeInsetsDirectional.only(end: padding),
+            padding: const EdgeInsetsDirectional.only(end: padding),
             duration: ADurations.chipDecorationAnimation,
             child: Icon(
               AIcons.pin,
@@ -192,7 +206,7 @@ class CoveredFilterChip<T extends CollectionFilter> extends StatelessWidget {
           ),
         if (filter is AlbumFilter && androidFileUtils.isOnRemovableStorage(filter.album))
           AnimatedPadding(
-            padding: EdgeInsetsDirectional.only(end: padding),
+            padding: const EdgeInsetsDirectional.only(end: padding),
             duration: ADurations.chipDecorationAnimation,
             child: Icon(
               AIcons.storageCard,
@@ -202,7 +216,7 @@ class CoveredFilterChip<T extends CollectionFilter> extends StatelessWidget {
           ),
         if (filter is AlbumFilter && vaults.isVault(filter.album))
           AnimatedPadding(
-            padding: EdgeInsetsDirectional.only(end: padding),
+            padding: const EdgeInsetsDirectional.only(end: padding),
             duration: ADurations.chipDecorationAnimation,
             child: Icon(
               AIcons.locked,
@@ -211,7 +225,7 @@ class CoveredFilterChip<T extends CollectionFilter> extends StatelessWidget {
             ),
           ),
         Text(
-          locked ? AText.valueNotAvailable : countFormatter.format(source.count(filter)),
+          locked ? AText.valueNotAvailable : '${countFormatter.format(source.count(filter))} items',
           style: TextStyle(
             color: _detailColor(context),
             fontSize: fontSize,

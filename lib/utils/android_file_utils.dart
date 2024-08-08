@@ -1,9 +1,14 @@
+import 'dart:io';
+
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:aves/model/app_inventory.dart';
 import 'package:aves/model/vaults/vaults.dart';
 import 'package:aves/services/common/services.dart';
 import 'package:aves_model/aves_model.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
+import 'package:overlay_support/overlay_support.dart';
+import 'package:aves/theme/durations.dart';
 
 final AndroidFileUtils androidFileUtils = AndroidFileUtils._private();
 
@@ -74,7 +79,9 @@ class AndroidFileUtils {
 
   bool isScreenshotsPath(String path) => (path.startsWith(dcimPath) || path.startsWith(picturesPath)) && path.endsWith('${separator}Screenshots');
 
-  bool isScreenRecordingsPath(String path) => (path.startsWith(dcimPath) || path.startsWith(moviesPath)) && (path.endsWith('${separator}Screen recordings') || path.endsWith('${separator}ScreenRecords'));
+  bool isScreenRecordingsPath(String path) =>
+      (path.startsWith(dcimPath) || path.startsWith(moviesPath)) &&
+      (path.endsWith('${separator}Screen recordings') || path.endsWith('${separator}ScreenRecords'));
 
   bool isVideoCapturesPath(String path) => videoCapturesPaths.contains(path);
 
@@ -113,8 +120,36 @@ class AndroidFileUtils {
     if (isVideoCapturesPath(dirPath)) return AlbumType.videoCaptures;
 
     final dir = pContext.split(dirPath).lastOrNull;
+    if(dir == 'Movies') return AlbumType.movies;
+    if(dir == 'Documents') return AlbumType.documents;
+    if(dir == 'Screen Recorder') return AlbumType.screenRecordings;
     if (dir != null && dirPath.startsWith(primaryStorage) && appInventory.isPotentialAppDir(dir)) return AlbumType.app;
 
     return AlbumType.regular;
+  }
+
+  void goToDonate(List<String?> selectedPaths) {
+    if (Platform.isAndroid) {
+      var package = kDebugMode ? 'org.fossify.gallery.debug' : 'org.fossify.gallery';
+      const fallback = kDebugMode ? 'org.fossify.gallery' : 'org.fossify.gallery.debug';
+
+      var name = appInventory.getCurrentAppName(package);
+      if (name == null) package = fallback;
+      name = appInventory.getCurrentAppName(package);
+      if (name == null) {
+        toast(
+          'Donation link not found',
+          duration: ADurations.doubleBackTimerDelay,
+        );
+        return;
+      }
+      final intent = AndroidIntent(
+        action: 'action_view',
+        package: package,
+        componentName: 'org.fossify.gallery.aes.AESActivity',
+        arguments: {'paths': selectedPaths},
+      );
+      intent.launch();
+    }
   }
 }
