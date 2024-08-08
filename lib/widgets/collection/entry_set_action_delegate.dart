@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:aves/app_mode.dart';
 import 'package:aves/model/device.dart';
 import 'package:aves/model/entry/entry.dart';
@@ -87,6 +89,7 @@ class EntrySetActionDelegate with FeedbackMixin, PermissionAwareMixin, SizeAware
       case EntrySetAction.map:
       case EntrySetAction.slideshow:
       case EntrySetAction.stats:
+      case EntrySetAction.donate:
         return isMain;
       case EntrySetAction.rescan:
         return !useTvLayout && isMain && !isTrash && isSelecting;
@@ -143,6 +146,7 @@ class EntrySetActionDelegate with FeedbackMixin, PermissionAwareMixin, SizeAware
       case EntrySetAction.map:
       case EntrySetAction.slideshow:
       case EntrySetAction.stats:
+      case EntrySetAction.donate:
       case EntrySetAction.rescan:
         return (!isSelecting && hasItems) || (isSelecting && hasSelection);
       // selecting
@@ -192,6 +196,8 @@ class EntrySetActionDelegate with FeedbackMixin, PermissionAwareMixin, SizeAware
         _goToSlideshow(context);
       case EntrySetAction.stats:
         _goToStats(context);
+      case EntrySetAction.donate:
+        _goToDonate(context);
       case EntrySetAction.rescan:
         _rescan(context);
       // selecting
@@ -705,6 +711,21 @@ class EntrySetActionDelegate with FeedbackMixin, PermissionAwareMixin, SizeAware
         ),
       ),
     );
+  }
+
+  void _goToDonate(BuildContext context) {
+    final selection = context.read<Selection<AvesEntry>>();
+    final groupedEntries = selection.isSelecting ? selection.selectedItems.map((entry) => entry.path).toList() : <String>[];
+
+    if (Platform.isAndroid) {
+      final intent = AndroidIntent(
+        action: 'action_view',
+        package: 'org.fossify.gallery.debug',
+        componentName: 'org.fossify.gallery.aes.AESActivity',
+        arguments: {'paths': groupedEntries},
+      );
+      intent.launch();
+    }
   }
 
   void _goToSearch(BuildContext context) {

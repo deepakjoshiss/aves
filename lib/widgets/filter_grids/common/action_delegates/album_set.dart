@@ -33,6 +33,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
+import 'package:android_intent_plus/android_intent.dart';
 
 class AlbumChipSetActionDelegate extends ChipSetActionDelegate<AlbumFilter> with EntryStorageMixin {
   final Iterable<FilterGridItem<AlbumFilter>> _items;

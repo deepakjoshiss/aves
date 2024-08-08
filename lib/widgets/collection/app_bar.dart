@@ -643,6 +643,7 @@ class _CollectionAppBarState extends State<CollectionAppBar> with SingleTickerPr
       case EntrySetAction.map:
       case EntrySetAction.slideshow:
       case EntrySetAction.stats:
+      case EntrySetAction.donate:
       case EntrySetAction.rescan:
       case EntrySetAction.emptyBin:
       // selecting
