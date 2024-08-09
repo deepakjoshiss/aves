@@ -110,7 +110,7 @@ class AvesApp extends StatefulWidget {
     // prevents the canvas from drawing behind the nav bar on Android <10 (API <29),
     // so the nav bar is opaque, even when requesting `SystemUiMode.edgeToEdge` from Flutter
     // or setting `android:windowTranslucentNavigation` in Android themes.
-    final navBarColor = device.supportEdgeToEdgeUIMode ? statusBarColor : backgroundColor;
+    final navBarColor = device.supportEdgeToEdgeUIMode ? Colors.transparent : backgroundColor;
     return SystemUiOverlayStyle(
       systemNavigationBarColor: navBarColor,
       systemNavigationBarDividerColor: navBarColor,

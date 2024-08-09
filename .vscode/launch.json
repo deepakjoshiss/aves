@@ -8,20 +8,23 @@
       "name": "aves-play",
       "type": "dart",
       "request": "launch",
-      "args": ["--flavor", "play"],
+      "args": ["--flavor", "play", "--observatory-port", "9200"],
       "program": "lib/main_play.dart"
     },
     {
       "name": "aves-play-attach",
       "request": "attach", // Attach instead of launching
       "type": "dart",
+      "args": ["--observatory-port", "9200"],
       "packages": ".dart_tool/package_config.json",
-      "program": "lib/main_play.dart",
+      "program": "lib/main_play.dart"
     },
     {
       "name": "aves (profile mode)",
       "request": "launch",
       "type": "dart",
+      "args": ["--flavor", "play"],
+      "program": "lib/main_play.dart",
       "flutterMode": "profile"
     },
     {

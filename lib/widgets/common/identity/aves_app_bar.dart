@@ -201,7 +201,7 @@ class AvesFloatingBar extends StatefulWidget {
   final Widget? child;
 
   static const margin = EdgeInsets.all(0);
-  static const borderRadius = BorderRadius.all(Radius.circular(8));
+  static const borderRadius = BorderRadius.all(Radius.circular(0));
 
   const AvesFloatingBar({
     super.key,
@@ -253,24 +253,31 @@ class _AvesFloatingBarState extends State<AvesFloatingBar> with RouteAware {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final backgroundColor = theme.appBarTheme.backgroundColor ?? Themes.firstLayerColor(context);
+    final border = widget.child == null
+        ? Border(
+            top: BorderSide(
+            color: theme.dividerColor.withOpacity(0.6),
+          ))
+        : Border(
+            bottom: BorderSide(
+            color: theme.dividerColor.withOpacity(0.6),
+          ));
     return ValueListenableBuilder<bool>(
       valueListenable: _isBlurAllowedNotifier,
       builder: (context, isBlurAllowed, child) {
         final blurred = isBlurAllowed && context.select<Settings, bool>((s) => s.enableBlurEffect);
         return Container(
-          // foregroundDecoration: BoxDecoration(
-          //   border: Border.all(
-          //     color: theme.dividerColor,
-          //   ),
-          //   borderRadius: AvesFloatingBar.borderRadius,
-          // ),
+          foregroundDecoration: BoxDecoration(
+            border: border,
+            borderRadius: AvesFloatingBar.borderRadius,
+          ),
           margin: AvesFloatingBar.margin,
           child: BlurredRRect(
             enabled: blurred,
             borderRadius: AvesFloatingBar.borderRadius,
             child: widget.builder(
               context,
-              blurred ? backgroundColor.withOpacity(.70) : backgroundColor,
+              blurred ? backgroundColor.withOpacity(.85) : backgroundColor,
               widget.child,
             ),
           ),

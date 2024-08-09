@@ -16,7 +16,7 @@ class DrawerFilterIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textScaler = MediaQuery.textScalerOf(context);
-    final iconSize = textScaler.scale(24);
+    final iconSize = textScaler.scale(22);
 
     final _filter = filter;
     if (_filter == null) return Icon(AIcons.allCollection, size: iconSize);

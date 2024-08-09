@@ -22,7 +22,7 @@ class AppBottomNavBar extends StatefulWidget {
   // collection loaded in the `CollectionPage`, if any
   final CollectionLens? currentCollection;
 
-  static double get height => kBottomNavigationBarHeight + AvesFloatingBar.margin.vertical;
+  static double get height => 52 + AvesFloatingBar.margin.vertical;
 
   const AppBottomNavBar({
     super.key,
@@ -76,30 +76,36 @@ class _AppBottomNavBarState extends State<AppBottomNavBar> {
     ];
 
     Widget child = FloatingNavBar(
-      scrollController: PrimaryScrollController.of(context),
-      events: widget.events,
-      childHeight: AppBottomNavBar.height + context.select<MediaQueryData, double>((mq) => mq.effectiveBottomPadding),
-      child: SafeArea(
-        bottom: false,
+        scrollController: PrimaryScrollController.of(context),
+        events: widget.events,
+        childHeight: AppBottomNavBar.height + context.select<MediaQueryData, double>((mq) => mq.effectiveBottomPadding),
         child: AvesFloatingBar(
-          builder: (context, backgroundColor, child) => BottomNavigationBar(
-            items: items
-                .map((item) => BottomNavigationBarItem(
-                      icon: item.icon(context),
-                      label: item.label(context),
-                      tooltip: item.label(context),
-                    ))
-                .toList(),
-            onTap: (index) => _goTo(context, items, index),
-            currentIndex: _getCurrentIndex(context, items),
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: backgroundColor,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
+          builder: (context, backgroundColor, child) => Container(
+            color: backgroundColor,
+            child: SafeArea(
+              child: SizedBox(
+                height: AppBottomNavBar.height,
+                child: BottomNavigationBar(
+                  elevation: 0,
+                  items: items
+                      .map((item) => BottomNavigationBarItem(
+                            icon: item.navIcon(context),
+                            label: item.label(context),
+                            tooltip: item.label(context),
+                          ))
+                      .toList(),
+                  onTap: (index) => _goTo(context, items, index),
+                  selectedFontSize: 0,
+                  backgroundColor: Colors.transparent,
+                  currentIndex: _getCurrentIndex(context, items),
+                  type: BottomNavigationBarType.fixed,
+                  showSelectedLabels: false,
+                  showUnselectedLabels: false,
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
-    );
+        ));
 
     final animate = context.select<Settings, bool>((v) => v.animate);
     if (animate) {
