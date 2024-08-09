@@ -98,18 +98,19 @@ class AvesApp extends StatefulWidget {
   State<AvesApp> createState() => _AvesAppState();
 
   static void setSystemUIStyle(ThemeData theme) {
-    final style = systemUIStyleForBrightness(theme.brightness, theme.colorScheme.surfaceContainer);
+    final style = systemUIStyleForBrightness(theme.brightness, theme.colorScheme.surface);
     SystemChrome.setSystemUIOverlayStyle(style);
   }
 
   static SystemUiOverlayStyle systemUIStyleForBrightness(Brightness themeBrightness, Color backgroundColor) {
     final barBrightness = themeBrightness == Brightness.dark ? Brightness.light : Brightness.dark;
-    const statusBarColor = Colors.black54;
+    final alpha = themeBrightness == Brightness.dark ? 80 : 150;
+    var statusBarColor = backgroundColor.withAlpha(alpha);
     // as of Flutter v3.3.0-0.2.pre, setting `SystemUiOverlayStyle` (whether manually or automatically because of `AppBar`)
     // prevents the canvas from drawing behind the nav bar on Android <10 (API <29),
     // so the nav bar is opaque, even when requesting `SystemUiMode.edgeToEdge` from Flutter
     // or setting `android:windowTranslucentNavigation` in Android themes.
-    final navBarColor = device.supportEdgeToEdgeUIMode ? Colors.transparent : backgroundColor;
+    final navBarColor = device.supportEdgeToEdgeUIMode ? statusBarColor : backgroundColor;
     return SystemUiOverlayStyle(
       systemNavigationBarColor: navBarColor,
       systemNavigationBarDividerColor: navBarColor,

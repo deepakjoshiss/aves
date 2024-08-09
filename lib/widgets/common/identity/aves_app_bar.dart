@@ -89,19 +89,19 @@ class AvesAppBar extends StatelessWidget {
       pinned: pinned,
       delegate: _SliverAppBarDelegate(
         height: MediaQuery.paddingOf(context).top + appBarHeightForContentHeight(contentHeight),
-        child: DirectionalSafeArea(
-          start: !useTvLayout,
-          bottom: false,
-          child: AvesFloatingBar(
-            builder: (context, backgroundColor, child) => Material(
-              color: backgroundColor,
-              child: InkWell(
-                // absorb taps while providing visual feedback
-                onTap: () {},
-                onLongPress: () {},
-                child: child,
-              ),
+        child: AvesFloatingBar(
+          builder: (context, backgroundColor, child) => Material(
+            color: backgroundColor,
+            child: InkWell(
+              // absorb taps while providing visual feedback
+              onTap: () {},
+              onLongPress: () {},
+              child: child,
             ),
+          ),
+          child: DirectionalSafeArea(
+            start: !useTvLayout,
+            bottom: false,
             child: Theme(
               data: theme.copyWith(
                 colorScheme: colorScheme.copyWith(
@@ -200,7 +200,7 @@ class AvesFloatingBar extends StatefulWidget {
   final Widget Function(BuildContext context, Color backgroundColor, Widget? child) builder;
   final Widget? child;
 
-  static const margin = EdgeInsets.all(8);
+  static const margin = EdgeInsets.all(0);
   static const borderRadius = BorderRadius.all(Radius.circular(8));
 
   const AvesFloatingBar({
@@ -258,19 +258,19 @@ class _AvesFloatingBarState extends State<AvesFloatingBar> with RouteAware {
       builder: (context, isBlurAllowed, child) {
         final blurred = isBlurAllowed && context.select<Settings, bool>((s) => s.enableBlurEffect);
         return Container(
-          foregroundDecoration: BoxDecoration(
-            border: Border.all(
-              color: theme.dividerColor,
-            ),
-            borderRadius: AvesFloatingBar.borderRadius,
-          ),
+          // foregroundDecoration: BoxDecoration(
+          //   border: Border.all(
+          //     color: theme.dividerColor,
+          //   ),
+          //   borderRadius: AvesFloatingBar.borderRadius,
+          // ),
           margin: AvesFloatingBar.margin,
           child: BlurredRRect(
             enabled: blurred,
             borderRadius: AvesFloatingBar.borderRadius,
             child: widget.builder(
               context,
-              blurred ? backgroundColor.withOpacity(.85) : backgroundColor,
+              blurred ? backgroundColor.withOpacity(.70) : backgroundColor,
               widget.child,
             ),
           ),

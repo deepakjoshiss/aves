@@ -80,6 +80,7 @@ class _AppBottomNavBarState extends State<AppBottomNavBar> {
       events: widget.events,
       childHeight: AppBottomNavBar.height + context.select<MediaQueryData, double>((mq) => mq.effectiveBottomPadding),
       child: SafeArea(
+        bottom: false,
         child: AvesFloatingBar(
           builder: (context, backgroundColor, child) => BottomNavigationBar(
             items: items
