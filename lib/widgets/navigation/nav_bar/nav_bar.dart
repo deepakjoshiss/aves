@@ -180,7 +180,7 @@ class NavBarPaddingSliver extends StatelessWidget {
         builder: (context, enableBottomNavigationBar, child) {
           final canNavigate = context.select<ValueNotifier<AppMode>, bool>((v) => v.value.canNavigate);
           final showBottomNavigationBar = canNavigate && enableBottomNavigationBar;
-          return SizedBox(height: showBottomNavigationBar ? AppBottomNavBar.height : 0);
+          return SizedBox(height: showBottomNavigationBar ? AppBottomNavBar.height + 8: 0);
         },
       ),
     );

@@ -91,7 +91,7 @@ class FilterGridPage<T extends CollectionFilter> extends StatelessWidget {
               // key is expected by test driver
               key: const Key('filter-grid'),
               settingsRouteKey: settingsRouteKey,
-              appBar: appBar,
+              appBar: !showHeaders ? SliverPadding(padding: const EdgeInsets.only(bottom: 8), sliver: appBar) : appBar,
               appBarHeight: MediaQuery.paddingOf(context).top + appBarHeight,
               sections: sections,
               newFilters: newFilters,
