@@ -338,7 +338,7 @@ class _AvesFilterChipState extends State<AvesFilterChip> {
                   left: padding * 2,
                   right: padding * 2,
                   bottom: AvesFilterChip.decoratedContentVerticalPadding,
-                  top: AvesFilterChip.decoratedContentVerticalPadding / 2),
+                  top: AvesFilterChip.decoratedContentVerticalPadding / 3),
               color: chipBackground,
               child: content,
             ),

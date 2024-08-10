@@ -4,8 +4,10 @@ import 'package:aves/model/settings/settings.dart';
 import 'package:aves/model/source/collection_source.dart';
 import 'package:aves/model/vaults/vaults.dart';
 import 'package:aves/services/common/services.dart';
+import 'package:aves/theme/durations.dart';
 import 'package:aves/utils/android_file_utils.dart';
 import 'package:aves/utils/collection_utils.dart';
+import 'package:aves/utils/debouncer.dart';
 import 'package:aves/view/view.dart';
 import 'package:aves_model/aves_model.dart';
 import 'package:collection/collection.dart';
@@ -14,6 +16,7 @@ import 'package:flutter/widgets.dart';
 mixin AlbumMixin on SourceBase {
   final Set<String> _directories = {};
   final Set<String> _newAlbums = {};
+  final Debouncer _changeDebouncer = Debouncer(delay: ADurations.mediaContentChangeDebounceDelay);
 
   List<String> get rawAlbums => List.unmodifiable(_directories);
 
@@ -32,6 +35,7 @@ mixin AlbumMixin on SourceBase {
   }
 
   void notifyAlbumsChanged() {
+    debugPrint('>>>> notifyAlbumsChanged');
     eventBus.fire(AlbumsChangedEvent());
   }
 
@@ -129,6 +133,12 @@ mixin AlbumMixin on SourceBase {
     }
     if (notify) {
       eventBus.fire(AlbumSummaryInvalidatedEvent(directories));
+      if (directories!.isNotEmpty) {
+        _changeDebouncer(() {
+          debugPrint('>>>>> refreshing albums $directories');
+          notifyAlbumsChanged();
+        });
+      }
     }
   }
 

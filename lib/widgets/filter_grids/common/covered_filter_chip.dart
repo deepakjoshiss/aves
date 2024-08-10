@@ -62,7 +62,7 @@ class CoveredFilterChip<T extends CollectionFilter> extends StatelessWidget {
 
   static double detailIconSize(double extent) => 16;
 
-  static double detailFontSize(double extent) => 10;
+  static double detailFontSize(double extent) => 11;
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +166,7 @@ class CoveredFilterChip<T extends CollectionFilter> extends StatelessWidget {
       ),
       banner: banner,
       border: Border.fromBorderSide(BorderSide(color: context.select<AvesColorsData, Color>((v) => v.neutral).withAlpha(60))),
-      titleStyle: const TextStyle(fontSize: 16, fontFamily: 'sfpro', fontWeight: FontWeight.w500),
+      titleStyle: const TextStyle(fontSize: 15, fontFamily: 'sfpro', fontWeight: FontWeight.w500),
       details: showText ? _buildDetails(context, source, _filter) : null,
       padding: titlePadding,
       heroType: heroType,
@@ -189,10 +189,13 @@ class CoveredFilterChip<T extends CollectionFilter> extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         if (leading != null)
-          AnimatedPadding(
-            padding: const EdgeInsetsDirectional.only(end: padding),
-            duration: ADurations.chipDecorationAnimation,
-            child: leading,
+          Opacity(
+            opacity: 0.8,
+            child: AnimatedPadding(
+              padding: const EdgeInsetsDirectional.only(end: padding),
+              duration: ADurations.chipDecorationAnimation,
+              child: leading,
+            ),
           ),
         if (pinned)
           AnimatedPadding(
@@ -224,11 +227,15 @@ class CoveredFilterChip<T extends CollectionFilter> extends StatelessWidget {
               size: iconSize,
             ),
           ),
-        Text(
-          locked ? AText.valueNotAvailable : '${countFormatter.format(source.count(filter))} items',
-          style: TextStyle(
-            color: _detailColor(context),
-            fontSize: fontSize,
+        ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 16),
+          child: Text(
+            locked ? AText.valueNotAvailable : '${countFormatter.format(source.count(filter))} items',
+            style: TextStyle(
+              color: _detailColor(context),
+              fontWeight: FontWeight.w500,
+              fontSize: fontSize,
+            ),
           ),
         ),
       ],
