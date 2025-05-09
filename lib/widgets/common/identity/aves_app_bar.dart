@@ -89,19 +89,19 @@ class AvesAppBar extends StatelessWidget {
       pinned: pinned,
       delegate: _SliverAppBarDelegate(
         height: MediaQuery.paddingOf(context).top + appBarHeightForContentHeight(contentHeight),
-        child: DirectionalSafeArea(
-          start: !useTvLayout,
-          bottom: false,
-          child: AvesFloatingBar(
-            builder: (context, backgroundColor, child) => Material(
-              color: backgroundColor,
-              child: InkWell(
-                // absorb taps while providing visual feedback
-                onTap: () {},
-                onLongPress: () {},
-                child: child,
-              ),
+        child: AvesFloatingBar(
+          builder: (context, backgroundColor, child) => Material(
+            color: backgroundColor,
+            child: InkWell(
+              // absorb taps while providing visual feedback
+              onTap: () {},
+              onLongPress: () {},
+              child: child,
             ),
+          ),
+          child: DirectionalSafeArea(
+            start: !useTvLayout,
+            bottom: false,
             child: Theme(
               data: theme.copyWith(
                 colorScheme: colorScheme.copyWith(
@@ -200,8 +200,8 @@ class AvesFloatingBar extends StatefulWidget {
   final Widget Function(BuildContext context, Color backgroundColor, Widget? child) builder;
   final Widget? child;
 
-  static const margin = EdgeInsets.all(8);
-  static const borderRadius = BorderRadius.all(Radius.circular(8));
+  static const margin = EdgeInsets.all(0);
+  static const borderRadius = BorderRadius.all(Radius.circular(0));
 
   const AvesFloatingBar({
     super.key,
@@ -253,15 +253,22 @@ class _AvesFloatingBarState extends State<AvesFloatingBar> with RouteAware {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final backgroundColor = theme.appBarTheme.backgroundColor ?? Themes.firstLayerColor(context);
+    final border = widget.child == null
+        ? Border(
+            top: BorderSide(
+            color: theme.dividerColor.withOpacity(0.6),
+          ))
+        : Border(
+            bottom: BorderSide(
+            color: theme.dividerColor.withOpacity(0.6),
+          ));
     return ValueListenableBuilder<bool>(
       valueListenable: _isBlurAllowedNotifier,
       builder: (context, isBlurAllowed, child) {
         final blurred = isBlurAllowed && context.select<Settings, bool>((s) => s.enableBlurEffect);
         return Container(
           foregroundDecoration: BoxDecoration(
-            border: Border.all(
-              color: theme.dividerColor,
-            ),
+            border: border,
             borderRadius: AvesFloatingBar.borderRadius,
           ),
           margin: AvesFloatingBar.margin,

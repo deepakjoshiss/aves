@@ -14,6 +14,7 @@ enum EntrySetAction {
   map,
   slideshow,
   stats,
+  donate,
   rescan,
   // selecting
   share,
@@ -53,6 +54,7 @@ class EntrySetActions {
     EntrySetAction.map,
     EntrySetAction.slideshow,
     EntrySetAction.stats,
+    EntrySetAction.donate,
     null,
     EntrySetAction.rescan,
     EntrySetAction.emptyBin,
@@ -65,6 +67,7 @@ class EntrySetActions {
     EntrySetAction.map,
     EntrySetAction.slideshow,
     EntrySetAction.stats,
+    EntrySetAction.donate,
     // only available as a quick action
     EntrySetAction.selectAll,
   ];
@@ -83,6 +86,7 @@ class EntrySetActions {
     EntrySetAction.map,
     EntrySetAction.slideshow,
     EntrySetAction.stats,
+    EntrySetAction.donate,
     null,
     EntrySetAction.rescan,
     // editing actions are in their subsection
@@ -100,6 +104,7 @@ class EntrySetActions {
     EntrySetAction.map,
     EntrySetAction.slideshow,
     EntrySetAction.stats,
+    EntrySetAction.donate,
     EntrySetAction.selectAll,
     // editing actions are in their subsection
   ];

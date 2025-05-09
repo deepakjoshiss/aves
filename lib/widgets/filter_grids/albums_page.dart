@@ -79,7 +79,8 @@ class AlbumListPage extends StatelessWidget {
     return FilterNavigationPage.sort(settings.albumSortFactor, settings.albumSortReverse, source, filters);
   }
 
-  static Map<ChipSectionKey, List<FilterGridItem<AlbumFilter>>> groupToSections(BuildContext context, CollectionSource source, Iterable<FilterGridItem<AlbumFilter>> sortedMapEntries) {
+  static Map<ChipSectionKey, List<FilterGridItem<AlbumFilter>>> groupToSections(
+      BuildContext context, CollectionSource source, Iterable<FilterGridItem<AlbumFilter>> sortedMapEntries) {
     final newFilters = source.getNewAlbumFilters(context);
     final pinned = settings.pinnedFilters.whereType<AlbumFilter>();
 
@@ -102,12 +103,14 @@ class AlbumListPage extends StatelessWidget {
         final appsKey = AlbumImportanceSectionKey.apps(context);
         final vaultKey = AlbumImportanceSectionKey.vault(context);
         final regularKey = AlbumImportanceSectionKey.regular(context);
+        final recentKey = AlbumImportanceSectionKey.recentAlbum(context);
+        var count = 0;
         sections = groupBy<FilterGridItem<AlbumFilter>, ChipSectionKey>(unpinnedMapEntries, (kv) {
           switch (covers.effectiveAlbumType(kv.filter.album)) {
             case AlbumType.regular:
-              return regularKey;
+              return count++ < 3 ? recentKey : regularKey;
             case AlbumType.app:
-              return appsKey;
+              return count++ < 3 ? recentKey : appsKey;
             case AlbumType.vault:
               return vaultKey;
             default:
@@ -117,6 +120,7 @@ class AlbumListPage extends StatelessWidget {
 
         sections = {
           // group ordering
+          if (sections.containsKey(recentKey)) recentKey: sections[recentKey]!,
           if (sections.containsKey(specialKey)) specialKey: sections[specialKey]!,
           if (sections.containsKey(appsKey)) appsKey: sections[appsKey]!,
           if (sections.containsKey(vaultKey)) vaultKey: sections[vaultKey]!,

@@ -27,6 +27,8 @@ class AlbumImportanceSectionKey extends ChipSectionKey {
 
   factory AlbumImportanceSectionKey.newAlbum(BuildContext context) => AlbumImportanceSectionKey._private(context, AlbumImportance.newAlbum);
 
+  factory AlbumImportanceSectionKey.recentAlbum(BuildContext context) => AlbumImportanceSectionKey._private(context, AlbumImportance.recentAlbum);
+
   factory AlbumImportanceSectionKey.pinned(BuildContext context) => AlbumImportanceSectionKey._private(context, AlbumImportance.pinned);
 
   factory AlbumImportanceSectionKey.special(BuildContext context) => AlbumImportanceSectionKey._private(context, AlbumImportance.special);
@@ -38,7 +40,7 @@ class AlbumImportanceSectionKey extends ChipSectionKey {
   factory AlbumImportanceSectionKey.regular(BuildContext context) => AlbumImportanceSectionKey._private(context, AlbumImportance.regular);
 
   @override
-  Widget get leading => Icon(importance.getIcon());
+  Widget get leading => Icon(importance.getIcon(), size: 20);
 }
 
 class MimeTypeSectionKey extends ChipSectionKey {

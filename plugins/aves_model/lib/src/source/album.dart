@@ -7,4 +7,6 @@ enum AlbumType {
   screenRecordings,
   screenshots,
   videoCaptures,
+  movies,
+  documents,
 }

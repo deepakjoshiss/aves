@@ -24,6 +24,7 @@ extension ExtraEntrySetActionView on EntrySetAction {
       EntrySetAction.map => l10n.menuActionMap,
       EntrySetAction.slideshow => l10n.menuActionSlideshow,
       EntrySetAction.stats => l10n.menuActionStats,
+      EntrySetAction.donate => 'Donate',
       EntrySetAction.rescan => l10n.collectionActionRescan,
       // selecting
       EntrySetAction.share => l10n.entryActionShare,
@@ -69,6 +70,7 @@ extension ExtraEntrySetActionView on EntrySetAction {
       EntrySetAction.map => AIcons.map,
       EntrySetAction.slideshow => AIcons.slideshow,
       EntrySetAction.stats => AIcons.stats,
+      EntrySetAction.donate => AIcons.favouriteActive,
       EntrySetAction.rescan => AIcons.refresh,
       // selecting
       EntrySetAction.share => AIcons.share,

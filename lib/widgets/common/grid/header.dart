@@ -25,9 +25,9 @@ class SectionHeader<T> extends StatelessWidget {
     this.selectable = true,
   });
 
-  static const leadingSize = Size(48, 32);
-  static const margin = EdgeInsets.symmetric(vertical: 0, horizontal: 8);
-  static const padding = EdgeInsets.symmetric(vertical: 16, horizontal: 8);
+  static const leadingSize = Size(30, 30);
+  static const margin = EdgeInsets.symmetric(vertical: 0, horizontal: 0);
+  static const padding = EdgeInsets.only(top: 14, bottom: 6, left: 12);
   static const widgetSpanAlignment = PlaceholderAlignment.middle;
 
   @override
@@ -60,7 +60,7 @@ class SectionHeader<T> extends StatelessWidget {
                 child: Theme(
                   data: theme.copyWith(
                     iconTheme: theme.iconTheme.copyWith(
-                      color: theme.colorScheme.onSurface,
+                      color: theme.colorScheme.onSurface.withOpacity(0.75),
                     ),
                   ),
                   child: _SectionSelectableLeading<T>(
@@ -68,7 +68,7 @@ class SectionHeader<T> extends StatelessWidget {
                     sectionKey: sectionKey,
                     browsingBuilder: leading != null
                         ? (context) => Container(
-                              padding: const EdgeInsetsDirectional.only(end: 8),
+                              padding: const EdgeInsetsDirectional.only(end: 0, bottom: 3),
                               width: leadingSize.width,
                               height: leadingSize.height,
                               child: leading,
@@ -167,7 +167,7 @@ class SectionHeader<T> extends StatelessWidget {
   static TextStyle _headerTextStyle(BuildContext context) {
     // specify `height` for accurate paragraph height measurement
     final defaultTextHeight = DefaultTextStyle.of(context).style.height;
-    return AStyles.unknownTitleText.copyWith(height: defaultTextHeight);
+    return AStyles.unknownTitleText.copyWith(height: defaultTextHeight, fontSize: 17, fontWeight: FontWeight.w500);
   }
 }
 

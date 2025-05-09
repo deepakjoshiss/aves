@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:aves/app_mode.dart';
 import 'package:aves/model/covers.dart';
 import 'package:aves/model/entry/entry.dart';
@@ -13,6 +16,7 @@ import 'package:aves/services/common/services.dart';
 import 'package:aves/theme/colors.dart';
 import 'package:aves/theme/durations.dart';
 import 'package:aves/theme/themes.dart';
+import 'package:aves/utils/android_file_utils.dart';
 import 'package:aves/view/view.dart';
 import 'package:aves/widgets/collection/collection_page.dart';
 import 'package:aves/widgets/common/action_mixins/feedback.dart';
@@ -96,6 +100,7 @@ abstract class ChipSetActionDelegate<T extends CollectionFilter> with FeedbackMi
       case ChipSetAction.map:
       case ChipSetAction.slideshow:
       case ChipSetAction.stats:
+      case ChipSetAction.donate:
         return isMain;
       // selecting (single/multiple filters)
       case ChipSetAction.hide:
@@ -145,6 +150,7 @@ abstract class ChipSetActionDelegate<T extends CollectionFilter> with FeedbackMi
       case ChipSetAction.map:
       case ChipSetAction.slideshow:
       case ChipSetAction.stats:
+      case ChipSetAction.donate:
         return (!isSelecting && hasItems) || (isSelecting && hasSelection);
       // selecting (single/multiple filters)
       case ChipSetAction.delete:
@@ -190,6 +196,8 @@ abstract class ChipSetActionDelegate<T extends CollectionFilter> with FeedbackMi
         _goToSlideshow(context);
       case ChipSetAction.stats:
         _goToStats(context);
+      case ChipSetAction.donate:
+        androidFileUtils.goToDonate([]);
       // selecting (single/multiple filters)
       case ChipSetAction.hide:
         _hide(context);

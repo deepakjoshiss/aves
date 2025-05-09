@@ -114,6 +114,7 @@ dependencies:
   vector_math:
   volume_controller:
   xml:
+  android_intent_plus: ^5.1.0
 
 dependency_overrides:
   # media_kit_video v1.2.4 depends on a specific old version of screen_brightness
@@ -134,6 +135,20 @@ flutter:
     - assets/
   generate: true
   uses-material-design: true
+  fonts:
+    - family: sfpro
+      fonts:
+        - asset: fonts/sfpro_display_regular.ttf
+        - asset: fonts/sfpro_display_thin.ttf
+          weight: 100
+        - asset: fonts/sfpro_display_light.ttf
+          weight: 300
+        - asset: fonts/sfpro_display_medium.ttf
+          weight: 500
+        - asset: fonts/sfpro_display_semibold.ttf
+          weight: 600
+        - asset: fonts/sfpro_display_bold.ttf
+          weight: 700
 
 ################################################################################
 # Localization

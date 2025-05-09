@@ -13,9 +13,8 @@ import 'package:provider/provider.dart';
 final DoubleBackPopHandler doubleBackPopHandler = DoubleBackPopHandler._private();
 
 class DoubleBackPopHandler extends PopHandler {
-  bool _backOnce = false;
-  Timer? _backTimer;
-
+  bool backOnce = false;
+  
   DoubleBackPopHandler._private();
 
   @override
@@ -27,7 +26,7 @@ class DoubleBackPopHandler extends PopHandler {
 
   @override
   void onPopBlocked(BuildContext context) {
-    if (_backOnce) {
+    if (backOnce) {
       if (Navigator.canPop(context)) {
         Navigator.maybeOf(context)?.pop();
       } else {
@@ -37,13 +36,8 @@ class DoubleBackPopHandler extends PopHandler {
         SystemNavigator.pop();
       }
     } else {
-      _backOnce = true;
-      _backTimer?.cancel();
-      _backTimer = Timer(ADurations.doubleBackTimerDelay, () => _backOnce = false);
-      toast(
-        context.l10n.doubleBackExitMessage,
-        duration: ADurations.doubleBackTimerDelay,
-      );
+      backOnce = true;
+      
     }
   }
 }

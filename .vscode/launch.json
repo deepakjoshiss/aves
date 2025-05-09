@@ -1,0 +1,39 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "aves-play",
+      "type": "dart",
+      "request": "launch",
+      "args": ["--flavor", "play", "--observatory-port", "9200"],
+      "program": "lib/main_play.dart"
+    },
+    {
+      "name": "aves-play-attach",
+      "request": "attach", // Attach instead of launching
+      "type": "dart",
+      "args": ["--observatory-port", "9200"],
+      "packages": ".dart_tool/package_config.json",
+      "program": "lib/main_play.dart"
+    },
+    {
+      "name": "aves (profile mode)",
+      "request": "launch",
+      "type": "dart",
+      "args": ["--flavor", "play"],
+      "program": "lib/main_play.dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "release-aves",
+      "request": "launch",
+      "type": "dart",
+      "args": ["--flavor", "play"],
+      "flutterMode": "release",
+      "program": "lib/main_play.dart"
+    }
+  ]
+}
